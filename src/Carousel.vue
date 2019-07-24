@@ -728,22 +728,27 @@ export default {
         return;
       }
 
-      document.addEventListener(
-        this.isTouch ? "touchend" : "mouseup",
-        this.onEnd,
-        true
-      );
+      if (typeof document !== 'undefined')
+      {
 
-      document.addEventListener(
-        this.isTouch ? "touchmove" : "mousemove",
-        this.onDrag,
-        true
-      );
+        document.addEventListener(
+          this.isTouch ? "touchend" : "mouseup",
+          this.onEnd,
+          true
+        );
 
-      this.startTime = e.timeStamp;
-      this.dragging = true;
-      this.dragStartX = this.isTouch ? e.touches[0].clientX : e.clientX;
-      this.dragStartY = this.isTouch ? e.touches[0].clientY : e.clientY;
+        document.addEventListener(
+          this.isTouch ? "touchmove" : "mousemove",
+          this.onDrag,
+          true
+        );
+
+        this.startTime = e.timeStamp;
+        this.dragging = true;
+        this.dragStartX = this.isTouch ? e.touches[0].clientX : e.clientX;
+        this.dragStartY = this.isTouch ? e.touches[0].clientY : e.clientY;
+
+      }
     },
     /**
      * Trigger actions when mouse is released
@@ -783,17 +788,23 @@ export default {
 
       this.render();
 
-      // clear events listeners
-      document.removeEventListener(
-        this.isTouch ? "touchend" : "mouseup",
-        this.onEnd,
-        true
-      );
-      document.removeEventListener(
-        this.isTouch ? "touchmove" : "mousemove",
-        this.onDrag,
-        true
-      );
+      if (typeof document !== 'undefined')
+      {
+
+        // clear events listeners
+        document.removeEventListener(
+          this.isTouch ? "touchend" : "mouseup",
+          this.onEnd,
+          true
+        );
+        document.removeEventListener(
+          this.isTouch ? "touchmove" : "mousemove",
+          this.onDrag,
+          true
+        );
+
+      }
+
     },
     /**
      * Trigger actions when mouse is pressed and then moved (mouse drag)
